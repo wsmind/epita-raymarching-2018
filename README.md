@@ -1,7 +1,8 @@
 ﻿WebGL Paris 2015 - Raymarching
 ==============================
 
-[Live version](http://wsmind.github.io/webglparis2015-raymarching/)
+[Slides](http://wsmind.github.io/epita-raymarching-2018/)
+[Live coding tool](http://wsmind.github.io/epita-raymarching-2018/live.html)
 
 Copyright 2015 Rémi Papillié.
 
