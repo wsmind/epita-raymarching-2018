@@ -7,6 +7,9 @@ function ShaderProgram(vertexCode, fragmentCode)
 	var vertexShader = this._compileShader(gl.VERTEX_SHADER, vertexCode)
 	var fragmentShader = this._compileShader(gl.FRAGMENT_SHADER, fragmentCode)
 	
+	if (!vertexShader || !fragmentShader)
+		return
+	
 	this.program = gl.createProgram()
 	gl.attachShader(this.program, vertexShader)
 	gl.attachShader(this.program, fragmentShader)

@@ -184,7 +184,6 @@ void main()
                         program.destroy()
                     
                     program = new ShaderProgram(vs, code)
-                    program.bindAttribLocation(0, "position")
                     
                     var errorDiv = document.getElementById("errors")
                     if (program.errors.length)
@@ -197,6 +196,8 @@ void main()
                     {
                         canvas.style.display = "block"
                         errorDiv.style.display = "none"
+						
+						program.bindAttribLocation(0, "position")
                     }
                 }
                 
