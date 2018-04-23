@@ -234,12 +234,6 @@ float box(vec3 pos, vec3 size, float radius)
 					<p>Some optimizations work (e.g. bounding boxes)</p>
 				</section>
 
-				<section>
-					<h2>Make demos!</h2>
-					<p>Perfect candidate for raymarching</p>
-					<p><a href="http://cookie.paris">http://cookie.paris</a></p>
-				</section>
-                
 				<section data-state="demo" data-demo="questions">
 					<h2>Questions?</h2>
 				</section>
@@ -334,10 +328,12 @@ float box(vec3 pos, vec3 size, float radius)
 					"	float r = rand(vec2(index, x));",
 					"	//float r2 = rand(vec2(index, x + 100.0));",
 					"	vec2 result1 = vec2(x, sin(time * 0.1 + index) * 0.3 * (x + 1.0 + m) - sin(x * 3.0) * 0.3 - x * 0.5);",
-					"	vec2 result2 = vec2(r * 2.0 - 1.0, sin(time * 0.1 + index) * 0.3 * (x + 1.0 + m) - sin(x * 3.0) * 0.3 - x * 0.5 + smoothstep(0.0, m2 * 0.01, sin(time) * 0.5 + 0.5));",
+					"	//vec2 result2 = vec2(r * 2.0 - 1.0, sin(time * 0.1 + index) * 0.3 * (x + 1.0 + m) - sin(x * 3.0) * 0.3 - x * 0.5 + smoothstep(0.0, m2 * 0.01, sin(time) * 0.5 + 0.5));",
 					"	vec2 result3 = vec2(cos(index + time * (0.9 - r)), sin(index + time * 0.8)) * (0.65 + 0.3 * r);",
+					"	vec2 result = result1 * effect1 + result3 * effect3;",
+					"	result += effect2 * vec2(mod(floor(result.x * 40.0), 2.0) * 0.025, sin(x * 2.0) * 0.1);",
 					"	//vec2 result4 = vec2(sin(x2 * 3.14), cos(x2 * 3.14)) * pow(x2, 0.2) * (1.0 + sin(time) * 0.1) + vec2(r, r2) * 0.1;",
-					"	gl_Position = vec4(result1 * effect1 + result2 * effect2 + result3 * effect3, 0.0, 1.0 + perspective * m);",
+					"	gl_Position = vec4(result, 0.0, 1.0 + perspective * m);",
 					"	gl_PointSize = pointSize;",
 					"}",
 				].join("\n")
@@ -408,11 +404,12 @@ float box(vec3 pos, vec3 size, float radius)
 				}
 				else if (demoEffect == "questions")
 				{
-					particleShader.setFloatUniform("effect1", 1.0)
-					particleShader.setFloatUniform("effect2", 0.0)
-					particleShader.setFloatUniform("effect3", 0.0)
+					var t = time * 0.0001
+					particleShader.setFloatUniform("effect1", smooth(Math.abs(Math.cos(t))))
+					particleShader.setFloatUniform("effect2", Math.sin(t * 3.7) * 0.5 + 0.5)
+					particleShader.setFloatUniform("effect3", smooth(1.0 - Math.abs(Math.cos(t))))
 					//particleShader.setFloatUniform("effect4", 0.0)
-					particleShader.setFloatUniform("perspective", Math.sin(time * 0.001) * 0.04 - 0.04)
+					particleShader.setFloatUniform("perspective", Math.sin(time * 0.0003) * 0.04 - 0.04)
 				}
 				
 				// point size in pixel must be relative to screen/canvas resolution
